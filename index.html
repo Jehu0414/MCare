@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0074e0">
+  <title>Mobile Care Receipt</title>
+  <link rel="icon" type="image/png" href="mcare.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="app">
+    <header class="app-header">
+      <div>
+        <h3 class="eyebrow">MOBILE CARE<br> CELLPHONES & LAPTOP REPAIR SHOP</h3>
+        
+        <h1>Service receipt</h1>
+        <p class="intro">Create, save, and print a customer receipt.</p>
+      </div>
+      <div class="app-header-actions no-print">
+        <button class="button button-secondary" id="receiptHistoryButton" type="button">Receipt history</button>
+        <button class="button button-secondary" id="newReceiptButton" type="button">New receipt</button>
+      </div>
+    </header>
+
+    <p class="notice" id="notice" role="status" aria-live="polite"></p>
+
+    <section class="receipt" aria-label="Receipt details">
+      <div class="receipt-header">
+        <img class="receipt-logo" src="mcare.png" alt="Mobile Care logo">
+        <p class="receipt-brand">MOBILE CARE</p>
+        <h2>RECEIPT</h2>
+        <p class="receipt-subtitle">Quality service, every time</p>
+      </div>
+
+      <div class="form-grid">
+        <div class="field field-customer">
+          <label for="custName">Customer</label>
+          <input id="custName" type="text" placeholder="Customer name" maxlength="40" autocomplete="name" required>
+          <span class="print-value" id="printCustomer" aria-hidden="true"></span>
+        </div>
+        <div class="field field-date">
+          <label for="saleDate">Date</label>
+          <input id="saleDate" type="date">
+          <span class="print-value" id="printSaleDate" aria-hidden="true"></span>
+        </div>
+        <div class="field field-status">
+          <label for="repairStatus">Pymnt.</label>
+          <select id="repairStatus">
+            <option value="DOWN PAYMENT">DOWN PAYMENT</option>
+            <option value="PAID">PAID</option>
+          </select>
+          <span class="print-value" id="printStatus" aria-hidden="true"></span>
+        </div>
+        <div class="field field-warranty">
+          <label for="warrantyDate">Warranty until</label>
+          <input id="warrantyDate" type="date">
+          <span class="print-value" id="printWarrantyDate" aria-hidden="true"></span>
+        </div>
+        <div class="field field-phone-brand field-wide">
+          <label for="phoneBrand">Phone brand</label>
+          <input id="phoneBrand" type="text" placeholder="e.g. Samsung, iPhone, Tecno" maxlength="40">
+          <span class="print-value" id="printPhoneBrand" aria-hidden="true"></span>
+        </div>
+        <div class="field field-wide field-issue">
+          <label for="comments">Device issue</label>
+          <input id="comments" type="text" placeholder="e.g. Phone not charging" maxlength="60">
+          <span class="print-value" id="printComments" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <section class="items-section" aria-labelledby="itemsHeading">
+        <div class="section-heading">
+          <h3 id="itemsHeading">Items and services</h3>
+          <span class="muted">Up to 5 items</span>
+        </div>
+        <div class="item-list" id="itemList"></div>
+        <button class="button button-add no-print" id="addItemButton" type="button">+ Add item</button>
+      </section>
+
+      <section class="totals" aria-label="Receipt totals">
+        <div class="total-line">
+          <span>Items total</span>
+          <strong id="itemsTotal">₱0.00</strong>
+        </div>
+        <div class="field payment-field" id="paymentField" hidden>
+          <label for="paymentAmount">Down payment</label>
+          <div class="currency-input">
+            <span>₱</span>
+            <input id="paymentAmount" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0.00">
+          </div>
+        </div>
+        <div class="total-line payment-line" id="paymentLine" hidden>
+          <span>Down payment</span>
+          <strong id="paymentDisplay">₱0.00</strong>
+        </div>
+        <div class="total-line balance-line">
+          <span id="balanceLabel">Balance due</span>
+          <strong class="balance-amount" id="balanceDue">₱0.00</strong>
+        </div>
+      </section>
+
+      <footer class="receipt-footer">
+        <p>Thank you for choosing Mobile Care!</p>
+        <p>MOBILE CARE SERVICE</p>
+        <p>ADDRESS: T. Alonzo St. Poblacion, Mad, Cebu along FCCT Lawis</p>
+      </footer>
+    </section>
+
+    <div class="actions no-print">
+      <button class="button button-primary" id="printButton" type="button">Print receipt</button>
+    </div>
+
+    <dialog class="history-dialog no-print" id="receiptHistoryDialog" aria-labelledby="receiptHistoryTitle">
+      <div class="history-dialog-header">
+        <div>
+          <h2 id="receiptHistoryTitle">Receipt history</h2>
+          <p>Saved receipts stay in this browser and are not included when printing.</p>
+        </div>
+        <button class="button button-secondary" id="closeReceiptHistory" type="button">Close</button>
+      </div>
+      <label class="history-search-label" for="historySearch">Find a receipt</label>
+      <input class="history-search" id="historySearch" type="search" placeholder="Search customer, phone brand, or date">
+      <p class="history-status" id="historyStatus" role="status" aria-live="polite"></p>
+      <div class="history-list" id="historyList"></div>
+    </dialog>
+
+    <dialog class="confirm-dialog" id="newReceiptDialog" aria-labelledby="newReceiptTitle">
+      <h2 id="newReceiptTitle">Start a new receipt?</h2>
+      <p>This will clear the current receipt. This action cannot be undone.</p>
+      <div class="confirm-dialog-actions">
+        <button class="button button-secondary" id="cancelNewReceipt" type="button">Cancel</button>
+        <button class="button button-primary" id="confirmNewReceipt" type="button">Start new receipt</button>
+      </div>
+    </dialog>
+  </main>
+</body>
+</html>

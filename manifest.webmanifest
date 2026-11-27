@@ -1,0 +1,16 @@
+{
+  "name": "Mobile Care Receipt",
+  "short_name": "Mobile Care",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0074e0",
+  "icons": [
+    {
+      "src": "./mcare.png",
+      "sizes": "928x907",
+      "type": "image/png"
+    }
+  ]
+}
