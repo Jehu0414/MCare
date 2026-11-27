@@ -1,11 +1,13 @@
 "use strict";
 
-const CACHE_NAME = "mobile-care-receipt-v1";
+const CACHE_NAME = "mobile-care-receipt-v2";
 const APP_SHELL = [
   "./index.html",
   "./styles.css",
   "./script.js",
   "./mcare.png",
+  "./mcare-192.png",
+  "./mcare-512.png",
   "./manifest.webmanifest"
 ];
 
